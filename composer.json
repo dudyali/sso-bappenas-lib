@@ -1,0 +1,19 @@
+{
+    "name": "dudyali/sso-bappenas-lib",
+    "description": "helper class for integrating your apps to sso-bappenas",
+    "type": "library",
+    "autoload": {
+        "psr-4": {
+            "Dudyali\\SsoBappenasLib\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Dudy Ali",
+            "email": "dudyali@gmail.com"
+        }
+    ],
+    "require": {
+        "guzzlehttp/guzzle": "^7.8.1"
+    }
+}
