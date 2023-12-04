@@ -1,6 +1,6 @@
 {
     "name": "dudyali/sso-bappenas-lib",
-    "description": "helper class for integrating your apps to sso-bappenas",
+    "description": "helper class to integrate your application into sso-bappenas",
     "type": "library",
     "autoload": {
         "psr-4": {
