@@ -2,7 +2,7 @@
 
 namespace Dudyali\SsoBappenasLib;
 
-define('SERVER_HOST', 'https://sso-server.dev-aplikasi.dev');
+define('SERVER_HOST', env('SSO_HOST'));
 
 define('API_ENDPOINT', '/login');
 
