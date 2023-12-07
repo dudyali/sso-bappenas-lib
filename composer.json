@@ -7,6 +7,13 @@
             "Dudyali\\SsoBappenasLib\\": "src/"
         }
     },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Dudyali\\SsoBappenasLib\\SSOServiceProvider"
+            ]
+        }
+    },
     "authors": [
         {
             "name": "Dudy Ali",

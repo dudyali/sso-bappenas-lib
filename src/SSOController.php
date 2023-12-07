@@ -6,9 +6,10 @@ use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use InvalidArgumentException;
-use App\Http\Controllers\Controller;
+use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
+use Dudyali\SsoBappenasLib\SSOHelper;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Session;
 
@@ -26,8 +27,8 @@ class SSOController extends Controller
             "prompt" => true
         ]);
 
-        // return redirect(config("auth.sso_host") .  "/oauth/authorize?" . $query);
-        return redirect(config("auth.sso_host") .  "/request?" . $query);
+        // return redirect(config("sso_config.sso_host") .  "/oauth/authorize?" . $query);
+        return redirect(config("sso_config.sso_host") .  "/request?" . $query);
 
     }
     public function getCallback(Request $request)
@@ -38,7 +39,7 @@ class SSOController extends Controller
         throw_unless(strlen($state) > 0 && $state == $request->state, InvalidArgumentException::class);
 
         $response = Http::asForm()->post(
-            config("auth.sso_host") .  "/api/token-user",
+            config("sso_config.sso_host") .  "/api/token-user",
             [
                 "state" => $state,
                 "grant_type" => "authorization_code",
@@ -58,7 +59,7 @@ class SSOController extends Controller
         $response = Http::withHeaders([
             "Accept" => "application/json",
             "Authorization" => "Bearer " . $access_token
-        ])->get(config("auth.sso_host") .  "/api/user");
+        ])->get(config("sso_config.sso_host") .  "/api/user");
         $userArray = $response->json();
         // return $userArray;
         try {
@@ -74,7 +75,7 @@ class SSOController extends Controller
             $user->save();
         }
         Auth::login($user);
-        return redirect(route("home"));
+        return redirect('/');
     }
 
     public function getCallbackSession(Request $request)
@@ -85,13 +86,13 @@ class SSOController extends Controller
                         "Accept" => "application/json",
                         "Authorization" => "Bearer " . $request->token
                     ])
-                    ->get(config('auth.sso_host').'/api/verify-token');
+                    ->get(config('sso_config.sso_host').'/api/verify-token');
         // dd($response);
         if($response->status() == 200){
             $cekUser = Http::withHeaders([
                 "Accept" => "application/json",
                 "Authorization" => "Bearer " . $request->token
-            ])->get(config("auth.sso_host") .  "/api/cek-user");
+            ])->get(config("sso_config.sso_host") .  "/api/cek-user");
 
             $user = json_decode($cekUser);
             // dd($user);
@@ -100,10 +101,11 @@ class SSOController extends Controller
 
             $getUser = User::where('email', $email)->first();
             if($getUser){
-                // return $getUser;
+                // return $user;
                 Session::put("access_token", $request->token);
                 Auth::login($getUser);
-                return redirect()->route('dashboard');
+                // return Auth::user();
+                return redirect('/');
             } else {
                 if (Schema::hasColumn('users', 'NIP')) {
 
@@ -112,7 +114,7 @@ class SSOController extends Controller
                         // return $getUser;
                         Session::put("access_token", $request->token);
                         Auth::login($getUserNIP);
-                        return redirect()->route('dashboard');
+                        return redirect('/');
                     } else {
                         return response()->json(['error' => 'Unauthorized Access'], 404);
                     }
@@ -124,5 +126,19 @@ class SSOController extends Controller
         } else {
             return response()->json(['error' => 'Unauthorized.'], 401);
         }
+    }
+
+    public function logout(Request $request)
+    {
+        if(session()->get("access_token") != ''){
+            SSOHelper::logoutFromSSO();
+            Auth::logout();
+
+            $urlSso = config('sso_config.sso_host');
+            return redirect($urlSso.'/logout-api');
+        }
+        Auth::logout();
+        // return $request;
+        return redirect('login')->with('success','Anda Berhasil Logout');
     }
 }
