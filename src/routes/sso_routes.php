@@ -1,6 +1,6 @@
 <?php
 use Illuminate\Support\Facades\Route;
-
+use Dudyali\SsoBappenasLib\SSOController;
 
 Route::get("/sso/login", [SSOController::class, 'getLogin'])->name("sso.login");
 Route::get("/sso/callback", [SSOController::class, 'getCallback'])->name("sso.callback");
