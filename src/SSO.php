@@ -3,13 +3,12 @@
 namespace Dudyali\SsoBappenasLib;
 
 use Illuminate\Support\Str;
-use Illuminate\Http\Request;
 
 class SSO
 {
-    public static function authenticate(Request $request)
+    public static function authenticate()
     {
-        $request->session()->put('state', $state = Str::random(40));
+        request()->session()->put('state', $state = Str::random(40));
 
         $query = http_build_query([
             'redirect_uri' => config('auth.callback'),
@@ -20,7 +19,7 @@ class SSO
         ]);
 
         redirect(config('sso_config.sso_host').'/request?'.$query)->send();
-        
+
         exit();
     }
 
