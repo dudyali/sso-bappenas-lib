@@ -6,7 +6,7 @@ define('SERVER_HOST', env('SSO_HOST'));
 
 define('API_ENDPOINT', '/login');
 
-class SSO 
+class SSO
 {
     public static function authenticate()
     {
@@ -16,17 +16,16 @@ class SSO
 
     public static function getUser()
     {
-        return "on development";
+        return 'on development';
     }
 
     public static function check()
     {
-        return "on development";
+        return 'on development';
     }
 
     public static function logout()
     {
-        return "on development";
+        return 'on development';
     }
 }
-
