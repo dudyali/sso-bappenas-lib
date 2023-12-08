@@ -2,15 +2,25 @@
 
 namespace Dudyali\SsoBappenasLib;
 
-define('SERVER_HOST', env('SSO_HOST'));
-
-define('API_ENDPOINT', '/login');
+use Illuminate\Support\Str;
+use Illuminate\Http\Request;
 
 class SSO
 {
-    public static function authenticate()
+    public static function authenticate(Request $request)
     {
-        redirect(SERVER_HOST.API_ENDPOINT)->send();
+        $request->session()->put('state', $state = Str::random(40));
+
+        $query = http_build_query([
+            'redirect_uri' => config('auth.callback'),
+            'response_type' => 'code',
+            'scope' => config('auth.scopes'),
+            'state' => $state,
+            'prompt' => true,
+        ]);
+
+        redirect(config('sso_config.sso_host').'/request?'.$query)->send();
+        
         exit();
     }
 
