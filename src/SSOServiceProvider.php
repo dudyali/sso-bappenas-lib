@@ -1,5 +1,4 @@
 <?php
-// packages/vendor-name/package-name/src/YourServiceProvider.php
 
 namespace Dudyali\SsoBappenasLib;
 
@@ -58,10 +57,7 @@ class SSOServiceProvider extends ServiceProvider
         $this->publishes($config_files, 'config');
         $this->publishes($command_files, 'commands');
         $this->publishes($minimum, 'minimum');
-        $this->publishes($custom_routes_file, 'custom_routes',function () {
-            $this->updateRouteWeb();
-        });
-        // $this->updateRouteWeb();
+        $this->publishes($custom_routes_file, 'custom_routes');
     }
 }
 

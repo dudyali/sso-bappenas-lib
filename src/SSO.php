@@ -11,9 +11,9 @@ class SSO
         request()->session()->put('state', $state = Str::random(40));
 
         $query = http_build_query([
-            'redirect_uri' => config('auth.callback'),
+            'redirect_uri' => url('sso/callback'),
             'response_type' => 'code',
-            'scope' => config('auth.scopes'),
+            'scope' => 'view-user ',
             'state' => $state,
             'prompt' => true,
         ]);
