@@ -1,0 +1,4 @@
+- composer require dudyali/sso-bappenas-lib
+- php artisan vendor:publish --provider="Dudyali\SsoBappenasLib\SSOServiceProvider"
+- php artisan add-route-to-web
+- php artisan config:clear
