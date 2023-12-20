@@ -6,7 +6,7 @@ Sebuah *library* PHP untuk memudahkan aplikasi menggunakan fasilitas login SSO B
 
 ### Instalasi menggunakan Composer (disarankan)
 
-Metode yang disarankan untuk menginstall *library* ini adalah dengan menggunakan Composer. Composer adalah sebuah *package manager* untuk PHP. Keuntungan metode ini adalah Anda dapat dengan mudah mendapatkan update melalui satu perintah `composer update`. Selain itu, Anda juga dapat mengakses *library* ini dengan mudah apabila Anda menggunakan framework yang juga menggunakan Composer, misalnya Laravel. Anda dapat membaca lebih lanjut tentang Composer [di sini](https://getcomposer.org/).
+Metode yang disarankan untuk menginstall *library* ini adalah dengan menggunakan Composer. Composer adalah sebuah *package manager* untuk PHP. Anda juga dapat mengakses *library* ini dengan mudah apabila Anda menggunakan framework yang juga menggunakan Composer, misalnya Laravel. Anda dapat membaca lebih lanjut tentang Composer [di sini](https://getcomposer.org/).
 
 Untuk meng-*install* *library* ini, ikuti langkah berikut.
 
